@@ -3,7 +3,7 @@ package com.scarren.partiel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class VuePrinciaple extends AppCompatActivity {
+public class VuePrincipale extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
