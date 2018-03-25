@@ -8,6 +8,6 @@ public class VuePrincipale extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vue_princiaple);
+        setContentView(R.layout.vue_principale);
     }
 }
