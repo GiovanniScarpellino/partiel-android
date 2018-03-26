@@ -35,6 +35,10 @@ public class FragmentHome extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private TextView textDummyLocationSwitch;
+    private TextView textDummyLocation;
+    private SharedPreferences preferences;
+
     private OnFragmentInteractionListener mListener;
 
     public FragmentHome() {
@@ -72,11 +76,24 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vue = inflater.inflate(R.layout.fragment_home, container, false);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        TextView textView = vue.findViewById(R.id.texte_value_prefer_dummy_location);
-//        Boolean valeurSwitch = Boolean.parseBoolean(preferences.getString(getResources().getString(R.string.key_switch_value), ""));
-//        textView.setText("Prefer Dummy Location : " + valeurSwitch);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        textDummyLocationSwitch = vue.findViewById(R.id.texte_value_prefer_dummy_location);
+        textDummyLocation = vue.findViewById(R.id.texte_dummy_location);
         return vue;
+    }
+
+    @Override
+    public void onResume() {
+        boolean valueSwitch = preferences.getBoolean(getResources().getString(R.string.key_switch_value), true);
+        textDummyLocationSwitch.setText("Prefer Dummy Location : " + valueSwitch);
+        if(valueSwitch){
+            String latitude = preferences.getString(getResources().getString(R.string.key_latitude_value), "0");
+            String longitude = preferences.getString(getResources().getString(R.string.key_longitude_value), "0");
+            textDummyLocation.setText("Dummy Location : (" + latitude + "," + longitude + ")");
+        }else{
+            textDummyLocation.setText("");
+        }
+        super.onResume();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

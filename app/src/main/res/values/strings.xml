@@ -100,4 +100,5 @@
     <string name="key_switch_value">switch_value</string>
     <string name="key_latitude_value">latitude_value</string>
     <string name="key_longitude_value">longitude_value</string>
+    <string name="dummy_location">dummy_location</string>
 </resources>
