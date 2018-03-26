@@ -1,5 +1,6 @@
 package com.scarren.partiel.vues;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,25 +16,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.scarren.partiel.R;
+import com.scarren.partiel.SettingsActivity;
 
 public class VuePrincipale extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        FragmentGoogleMap.OnFragmentInteractionListener,
+        FragmentHome.OnFragmentInteractionListener,
+        FragmentCredits.OnFragmentInteractionListener{
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_principale);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -45,8 +40,10 @@ public class VuePrincipale extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.conteneur_principale, new FragmentGoogleMap())
+                .replace(R.id.conteneur_principale, new FragmentHome())
                 .commit();
+
+        navigationView.setCheckedItem(R.id.nav_home);
     }
 
     @Override
@@ -75,6 +72,7 @@ public class VuePrincipale extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -87,18 +85,22 @@ public class VuePrincipale extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id){
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principale, new FragmentHome())
+                        .commit();
+                break;
+            case R.id.nav_map:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principale, new FragmentGoogleMap())
+                        .commit();
+                break;
+            case R.id.nav_credits:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principale, new FragmentCredits())
+                        .commit();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
